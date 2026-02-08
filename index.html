@@ -58,7 +58,39 @@
                 </li>
             </ul>
         </section>
+        <aside class="cart" aria-label="Корзина">
+            <h2 class="cart__title">Корзина</h2>
+            <div class="cart__items"></div>
+            <p class="cart__total">Итого: <span class="cart__total-sum">0 ₽</span></p>
+            <button type="button" class="cart__checkout-btn">Оформить заказ</button>
+        </aside>
     </main>
+    <div class="modal" id="order-modal" aria-hidden="true">
+        <div class="modal__overlay"></div>
+        <div class="modal__content">
+            <h2 class="modal__title">Оформление заказа</h2>
+            <form class="order-form" id="order-form" novalidate>
+                <label class="order-form__label">
+                    Имя
+                    <input type="text" class="order-form__input" name="firstName" required autocomplete="given-name">
+                </label>
+                <label class="order-form__label">
+                    Фамилия
+                    <input type="text" class="order-form__input" name="lastName" required autocomplete="family-name">
+                </label>
+                <label class="order-form__label">
+                    Адрес доставки
+                    <input type="text" class="order-form__input" name="address" required autocomplete="street-address">
+                </label>
+                <label class="order-form__label">
+                    Контактный номер телефона
+                    <input type="tel" class="order-form__input" name="phone" required autocomplete="tel">
+                </label>
+                <button type="submit" class="order-form__submit">Создать заказ</button>
+            </form>
+            <button type="button" class="modal__close" aria-label="Закрыть">×</button>
+        </div>
+    </div>
     <footer class="footer">
         <p>2026 Интернет-магазин</p>
     </footer>
