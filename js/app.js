@@ -1,9 +1,38 @@
 (function () {
     'use strict';
 
+    var STORAGE_KEY = 'shopCart';
     var cart = [];
     var cartItemsEl = document.querySelector('.cart__items');
     var cartTotalSumEl = document.querySelector('.cart__total-sum');
+
+    function saveCartToStorage() {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
+        } catch (e) {
+            console.warn('Не удалось сохранить корзину', e);
+        }
+    }
+
+    function loadCartFromStorage() {
+        try {
+            var data = localStorage.getItem(STORAGE_KEY);
+            if (!data) return;
+            var parsed = JSON.parse(data);
+            if (Array.isArray(parsed)) {
+                cart = parsed.map(function (item) {
+                    return {
+                        id: item.id,
+                        name: item.name || 'Товар',
+                        price: Number(item.price) || 0,
+                        quantity: Math.max(1, parseInt(item.quantity, 10) || 1)
+                    };
+                });
+            }
+        } catch (e) {
+            console.warn('Не удалось загрузить корзину', e);
+        }
+    }
 
     function formatPrice(price) {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + ' ₽';
@@ -49,6 +78,7 @@
             cartItemsEl.appendChild(line);
         });
         cartTotalSumEl.textContent = formatPrice(getTotal());
+        saveCartToStorage();
     }
 
     function escapeHtml(text) {
@@ -100,6 +130,7 @@
         });
     }
 
+    loadCartFromStorage();
     initAddToCart();
     initCartItemActions();
     renderCart();
