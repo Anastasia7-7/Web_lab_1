@@ -159,6 +159,7 @@ body {
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
 }
 
 .modal__content {
@@ -170,6 +171,8 @@ body {
     width: 100%;
     max-height: 90vh;
     overflow-y: auto;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    cursor: default;
 }
 
 .modal__title {
@@ -196,6 +199,11 @@ body {
     color: #333;
 }
 
+.modal__close:focus {
+    outline: 2px solid #1976d2;
+    outline-offset: 2px;
+}
+
 /* Форма заказа */
 .order-form {
     display: flex;
@@ -215,11 +223,16 @@ body {
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
+    transition: border-color 0.2s;
 }
 
 .order-form__input:focus {
     outline: none;
     border-color: #1976d2;
+}
+
+.order-form__input::placeholder {
+    color: #999;
 }
 
 .order-form__submit {
@@ -235,6 +248,17 @@ body {
 
 .order-form__submit:hover {
     background: #1b5e20;
+}
+
+.order-form__submit:focus {
+    outline: 2px solid #1b5e20;
+    outline-offset: 2px;
+}
+
+.cart__items:empty::after {
+    content: "Корзина пуста";
+    color: #999;
+    font-size: 0.9rem;
 }
 
 .footer {
