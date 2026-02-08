@@ -119,6 +119,19 @@ body {
     font-size: 0.9rem;
 }
 
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item__info {
+    color: #666;
+    white-space: nowrap;
+}
+
 .cart__total {
     font-weight: bold;
     font-size: 1.125rem;
