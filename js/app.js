@@ -130,8 +130,63 @@
         });
     }
 
+    var orderModal = document.getElementById('order-modal');
+    var orderForm = document.getElementById('order-form');
+    var orderSuccess = document.getElementById('order-success');
+    var modalOverlay = orderModal && orderModal.querySelector('.modal__overlay');
+    var modalClose = orderModal && orderModal.querySelector('.modal__close');
+
+    function openOrderModal() {
+        if (!orderModal) return;
+        orderModal.classList.add('is-open');
+        orderModal.setAttribute('aria-hidden', 'false');
+        if (orderForm) orderForm.hidden = false;
+        if (orderSuccess) orderSuccess.hidden = true;
+    }
+
+    function closeOrderModal() {
+        if (!orderModal) return;
+        orderModal.classList.remove('is-open');
+        orderModal.setAttribute('aria-hidden', 'true');
+        if (orderForm) {
+            orderForm.reset();
+            orderForm.hidden = false;
+        }
+        if (orderSuccess) orderSuccess.hidden = true;
+    }
+
+    function initOrderModal() {
+        var checkoutBtn = document.querySelector('.cart__checkout-btn');
+        if (checkoutBtn) {
+            checkoutBtn.addEventListener('click', openOrderModal);
+        }
+        if (modalOverlay) {
+            modalOverlay.addEventListener('click', closeOrderModal);
+        }
+        if (modalClose) {
+            modalClose.addEventListener('click', closeOrderModal);
+        }
+        if (orderForm) {
+            orderForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var inputs = orderForm.querySelectorAll('[required]');
+                var valid = true;
+                inputs.forEach(function (input) {
+                    if (!input.value.trim()) valid = false;
+                });
+                if (!valid) return;
+                if (orderForm) orderForm.hidden = true;
+                if (orderSuccess) orderSuccess.hidden = false;
+                setTimeout(function () {
+                    closeOrderModal();
+                }, 1500);
+            });
+        }
+    }
+
     loadCartFromStorage();
     initAddToCart();
     initCartItemActions();
+    initOrderModal();
     renderCart();
 })();
