@@ -20,14 +20,31 @@
         renderCart();
     }
 
+    function changeQuantity(id, delta) {
+        var item = cart.filter(function (i) { return i.id === id; })[0];
+        if (!item) return;
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            removeFromCart(id);
+            return;
+        }
+        renderCart();
+    }
+
     function renderCart() {
         cartItemsEl.innerHTML = '';
         cart.forEach(function (item) {
             var line = document.createElement('div');
             line.className = 'cart-item';
             line.dataset.id = item.id;
-            line.innerHTML = '<span class="cart-item__name">' + escapeHtml(item.name) + '</span> ' +
-                '<span class="cart-item__info">' + formatPrice(item.price) + ' × ' + item.quantity + '</span>' +
+            line.innerHTML =
+                '<span class="cart-item__name">' + escapeHtml(item.name) + '</span>' +
+                '<div class="cart-item__quantity">' +
+                '<button type="button" class="cart-item__qty-minus" data-id="' + escapeHtml(item.id) + '" aria-label="Уменьшить">−</button>' +
+                '<span class="cart-item__qty-value">' + item.quantity + '</span>' +
+                '<button type="button" class="cart-item__qty-plus" data-id="' + escapeHtml(item.id) + '" aria-label="Увеличить">+</button>' +
+                '</div>' +
+                '<span class="cart-item__info">' + formatPrice(item.price * item.quantity) + '</span>' +
                 '<button type="button" class="cart-item__remove" data-id="' + escapeHtml(item.id) + '" aria-label="Удалить из корзины">×</button>';
             cartItemsEl.appendChild(line);
         });
@@ -64,16 +81,26 @@
         });
     }
 
-    function initRemoveFromCart() {
+    function initCartItemActions() {
         cartItemsEl.addEventListener('click', function (e) {
-            var btn = e.target.closest('.cart-item__remove');
-            if (!btn) return;
-            var id = btn.dataset.id;
-            removeFromCart(id);
+            var removeBtn = e.target.closest('.cart-item__remove');
+            if (removeBtn) {
+                removeFromCart(removeBtn.dataset.id);
+                return;
+            }
+            var minusBtn = e.target.closest('.cart-item__qty-minus');
+            if (minusBtn) {
+                changeQuantity(minusBtn.dataset.id, -1);
+                return;
+            }
+            var plusBtn = e.target.closest('.cart-item__qty-plus');
+            if (plusBtn) {
+                changeQuantity(plusBtn.dataset.id, 1);
+            }
         });
     }
 
     initAddToCart();
-    initRemoveFromCart();
+    initCartItemActions();
     renderCart();
 })();
