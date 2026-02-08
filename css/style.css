@@ -268,3 +268,44 @@ body {
     text-align: center;
     font-size: 0.9rem;
 }
+
+/* Адаптивность: планшет */
+@media (min-width: 768px) {
+    .main {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .catalog {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .product-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .cart {
+        width: 320px;
+        position: sticky;
+        top: 1.5rem;
+    }
+}
+
+/* Адаптивность: ноутбук и выше */
+@media (min-width: 1024px) {
+    .main {
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .product-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.25rem;
+    }
+
+    .cart {
+        width: 340px;
+    }
+}
