@@ -15,6 +15,11 @@
         }, 0);
     }
 
+    function removeFromCart(id) {
+        cart = cart.filter(function (item) { return item.id !== id; });
+        renderCart();
+    }
+
     function renderCart() {
         cartItemsEl.innerHTML = '';
         cart.forEach(function (item) {
@@ -22,7 +27,8 @@
             line.className = 'cart-item';
             line.dataset.id = item.id;
             line.innerHTML = '<span class="cart-item__name">' + escapeHtml(item.name) + '</span> ' +
-                '<span class="cart-item__info">' + formatPrice(item.price) + ' × ' + item.quantity + '</span>';
+                '<span class="cart-item__info">' + formatPrice(item.price) + ' × ' + item.quantity + '</span>' +
+                '<button type="button" class="cart-item__remove" data-id="' + escapeHtml(item.id) + '" aria-label="Удалить из корзины">×</button>';
             cartItemsEl.appendChild(line);
         });
         cartTotalSumEl.textContent = formatPrice(getTotal());
@@ -58,6 +64,16 @@
         });
     }
 
+    function initRemoveFromCart() {
+        cartItemsEl.addEventListener('click', function (e) {
+            var btn = e.target.closest('.cart-item__remove');
+            if (!btn) return;
+            var id = btn.dataset.id;
+            removeFromCart(id);
+        });
+    }
+
     initAddToCart();
+    initRemoveFromCart();
     renderCart();
 })();

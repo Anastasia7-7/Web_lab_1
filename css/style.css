@@ -132,6 +132,24 @@ body {
     white-space: nowrap;
 }
 
+.cart-item__remove {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    padding: 0;
+    font-size: 1.25rem;
+    line-height: 1;
+    background: #f44336;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cart-item__remove:hover {
+    background: #d32f2f;
+}
+
 .cart__total {
     font-weight: bold;
     font-size: 1.125rem;
