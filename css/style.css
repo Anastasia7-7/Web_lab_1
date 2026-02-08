@@ -1,0 +1,31 @@
+/* Базовые стили - будут дополнены в следующих этапах */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    padding: 1rem;
+    background: #333;
+    color: #fff;
+}
+
+.main {
+    flex: 1;
+    padding: 1rem;
+}
+
+.footer {
+    padding: 1rem;
+    background: #333;
+    color: #fff;
+    text-align: center;
+}
